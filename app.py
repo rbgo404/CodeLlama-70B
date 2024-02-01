@@ -1,26 +1,17 @@
-import torch
-from transformers import AutoTokenizer, AutoModelForCausalLM, BitsAndBytesConfig, pipeline
+from vllm import LLM, SamplingParams
 
 class InferlessPythonModel:
     def initialize(self):
-        model_id = "tenyx/TenyxChat-8x7B-v1"
-        bnb_config = BitsAndBytesConfig(
-            load_in_4bit=True,
-            bnb_4bit_quant_type="nf4",
-            bnb_4bit_compute_dtype=getattr(torch, "float16"),
-            bnb_4bit_use_double_quant=True,
-            )
-        tokenizer = AutoTokenizer.from_pretrained(model_id)
-        model = AutoModelForCausalLM.from_pretrained(new_model, trust_remote_code=True, quantization_config=bnb_config, device_map="cuda")
-        self.pipe = pipeline("text-generation", model=model, tokenizer=tokenizer,device="cuda")
-        
+
+        self.sampling_params = SamplingParams(temperature=0.7, top_p=0.95,max_tokens=256)
+        self.llm = LLM(model="TheBloke/CodeLlama-70B-Python-GPTQ", quantization="gptq", dtype="float16",gpu_memory_utilization=0.5)
+
     def infer(self, inputs):
-        prompt = inputs["prompt"]
-        messages = [{"role": "system", "content":prompt}]
-        prompt = self.pipe.tokenizer.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
-        out = self.pipe(prompt, max_new_tokens=256, do_sample=True, top_p=0.9,temperature=0.9)
-        generated_text = out[0]["generated_text"][len(prompt):]
-        return {'generated_result': generated_text}
+        prompts = inputs["prompt"]
+        result = self.llm.generate(prompts, self.sampling_params)
+        result_output = [output.outputs[0].text for output in result]
+
+        return {'result': result_output[0]}
 
     def finalize(self):
         pass

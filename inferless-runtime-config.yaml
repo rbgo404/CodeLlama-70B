@@ -3,7 +3,4 @@ build:
   system_packages:
     - "libssl-dev"
   python_packages:
-    - "torch==2.1.2"
-    - "transformers==4.36.2"
-    - "accelerate==0.25.0"
-    - "scipy==1.11.4"
+    - "vllm"

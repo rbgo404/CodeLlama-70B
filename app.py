@@ -4,7 +4,7 @@ class InferlessPythonModel:
     def initialize(self):
 
         self.sampling_params = SamplingParams(temperature=0.7, top_p=0.95,max_tokens=256)
-        self.llm = LLM(model="TheBloke/CodeLlama-70B-Python-GPTQ", quantization="gptq", dtype="float16",gpu_memory_utilization=0.5)
+        self.llm = LLM(model="TheBloke/CodeLlama-70B-Python-GPTQ", quantization="gptq", dtype="float16")
 
     def infer(self, inputs):
         prompts = inputs["prompt"]

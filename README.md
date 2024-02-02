@@ -93,7 +93,7 @@ curl --location '<your_inference_url>' \
     "inputs": [
       {
         "data": [
-          "What is an AI?"
+          "def factorial(int n):"
         ],
         "name": "prompt",
         "shape": [

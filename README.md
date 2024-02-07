@@ -1,6 +1,6 @@
 # Tutorial - Deploy CodeLlama-70B using Inferless
 
-Check out [this tutorial](https://tutorials.inferless.com/deploy-CodeLlama-70B-using-inferless) which will guide you through the process of deploying a CodeLlama-70B model using Inferless.
+Check out [this tutorial](https://tutorials.inferless.com/deploy-codellama-70b-using-inferless) which will guide you through the process of deploying a CodeLlama-70B model using Inferless.
 
 ## TL;DR - Deploy  using Inferless:
 - Deployment of Deploy CodeLlama-70B model using [vLLM](https://github.com/vllm-project/vllm).
